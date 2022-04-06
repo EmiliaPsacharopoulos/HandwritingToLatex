@@ -1,6 +1,6 @@
 # HandwritingToLatex
 We are a student project team enrolled in EECS 351: Digital Signal Processing and Analysis at the University of Michigan.
-This GitHub repository hosts our code using various Python sklearn library classifiers, a neural network library, and Matlab models to perform character identification. Click the hyperlinks below to access a Jupiter Notebook file for each classification method. 
+This GitHub repository hosts our code for our whole project. Click the hyperlinks below to access a Jupiter Notebook or MATLAB file for each subsection. 
 
 Python Classifiers
 1. [K- Nearest Neighbor](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/KNearestNeighbors.ipynb)

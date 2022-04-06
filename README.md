@@ -5,7 +5,7 @@ This GitHub repository hosts our code for our whole project. Click the hyperlink
 ##### Python Classifiers
 1. [K- Nearest Neighbor](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/KNearestNeighbors.ipynb)
 2. [Multinomial Naïve Bayes](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/GaussianNB.ipynb)
-3. [Support Vector Machine]()
+3. [Support Vector Machine](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/SVM.ipynb)
 4. [Decision Tree](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/DecisionTree.ipynb)
 5. [Neural Network](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/LeNet_CNN)
 

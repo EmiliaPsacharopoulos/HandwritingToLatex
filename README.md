@@ -5,7 +5,7 @@ This GitHub repository hosts our code using various Python sklearn library class
 1. [K- Nearest Neighbor]()
 2. [Multinomial Naïve Bayes]()
 3. [Support Vector Machine]()
-4. [Decision Tree]()
+4. [Decision Tree](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/DecisionTree.ipynb)
 5. [Neural Network]()
 
 See our team website (insert link here) for more information regarding this project.

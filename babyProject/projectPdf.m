@@ -1,5 +1,5 @@
 
-study_home = '/Users/jamesdavid/Documents/Winter2022/EECS 351/project/pdf/';
+study_home = '/Users/jamesdavid/Documents/Winter2022/EECS 351/project/babyProject/pdf/';
 
 
 cd(study_home);

@@ -2,7 +2,7 @@
 % (https://www.mathworks.com/matlabcentral/fileexchange/46812-two-dimensional-gaussian-hi-pass-and-low-pass-image-filter), 
 % MATLAB Central File Exchange. Retrieved March 30, 2022. 
 
-cd('/Users/jamesdavid/Documents/Winter2022/EECS 351/project/');
+cd('/Users/jamesdavid/Documents/Winter2022/EECS 351/project/babyProject/');
 X = load('Matlab/trainset.mat');
 Y = load('Matlab/trainsetLabels.mat');
 Mdl = fitctree(X.images,Y.labels); %works

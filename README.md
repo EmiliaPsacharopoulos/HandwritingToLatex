@@ -15,5 +15,8 @@ This GitHub repository hosts our code for our whole project. Click the hyperlink
 
 ##### Edge Detection
 
+##### Latex Output
+1. [Latex Output]()
+
 
 See our team website (insert link here) for more information regarding this project.

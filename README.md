@@ -16,7 +16,7 @@ This GitHub repository hosts our code for our whole project. Click the hyperlink
 ##### Edge Detection
 
 ##### Latex Output
-1. [Latex Output]()
+1. [Latex Output](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/projectPDF.m)
 
 
 See our team website (insert link here) for more information regarding this project.

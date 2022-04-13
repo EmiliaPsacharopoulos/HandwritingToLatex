@@ -16,7 +16,8 @@ This GitHub repository hosts our code for our whole project. Click the hyperlink
 ##### Edge Detection
 
 ##### Latex Output
-1. [Latex Output](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/projectPDF.m)
+1. [Latex Output V1 with no newline capabilities](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/projectPDF.m)
+2. [Latex Output V2 with buggy newline capabilities]()
 
 
 See our [team website](https://sites.google.com/umich.edu/eecs-351-handwriting-to-latex/home?authuser=0) for more information regarding this project.

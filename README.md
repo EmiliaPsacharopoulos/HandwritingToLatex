@@ -19,4 +19,4 @@ This GitHub repository hosts our code for our whole project. Click the hyperlink
 1. [Latex Output](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/projectPDF.m)
 
 
-See our [team website](https://sites.google.com/umich.edu/eecs-351-handwriting-to-latex/code) for more information regarding this project.
+See our [team website](https://sites.google.com/umich.edu/eecs-351-handwriting-to-latex/home?authuser=0) for more information regarding this project.

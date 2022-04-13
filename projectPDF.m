@@ -2,7 +2,6 @@
 %user defined inputs: title, date
 function pdffilename = projectPDF(filename, title, date)
     %filename = "outputStrings.txt";
-    str = string(readlines(filename));
     study_home = 'C:\Users\emili\OneDrive\Desktop\Michigan\W22\EECS351\Project\'; %must be the same place
     cd(study_home);
     pdffilename = 'output.tex';
@@ -35,11 +34,33 @@ function pdffilename = projectPDF(filename, title, date)
         fprintf(outputLatex, '\\maketitle\n');
 
         %output the character array
-        addingBraces = append('{', str, '}');
-        fprintf(outputLatex, addingBraces);
+        fid = fopen(filename);
+        newLines = 0; %doing multiple new lines at once
+        while ~feof(fid)
+            tline = fgetl(fid);
+            if(tline == "")
+                newLines = newLines + 1;
+            else
+                if(newLines > 0)
+                    addingBraces = append('\\[', string(newLines), '\', 'baselineskip]')
+                    fprintf(outputLatex, '\\');
+                    fprintf(outputLatex, addingBraces);
+                    newLines = 0;
+                end
+            end
+            fprintf(outputLatex, tline);
+            fprintf(outputLatex, '\n');
+        
+        end
 
-
+        if(newLines > 0)
+            fprintf(outputLatex, '\\');
+            addingBraces = append('\\[', string(newLines), '\', 'baselineskip]')
+            fprintf(outputLatex, addingBraces);
+        end
+            
         % End Document
+        fprintf(outputLatex, '\n');
         fprintf(outputLatex, '\\end{document}\n\n');
     
         %

@@ -37,14 +37,12 @@ picx = abs(conv2(B2,sx));
 picy = abs(conv2(B2,sy));
 eimg = picx+picy;
 
-% eimg = edge(eimg, "Sobel");
-% mask = zeros(size(eimg));
-% mask(25:end-25,25:end-25) = 1;
-% eimg = activecontour(eimg,mask,200,'edge');
+picx = abs(conv2(eimg,sx));
+picy = abs(conv2(eimg,sy));
+eimg = "Sobel";
 
 text = imbinarize(eimg);
 text = bwareaopen(imfill(text,"holes"),30);
-% text = bwconvhull(text,'objects');
 text = bwpropfilt(text, 'Area', 200);
 
 sw1 = 0;

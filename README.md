@@ -55,6 +55,8 @@ Our character classification subsystem implementation in MATLAB can be split int
 
 
 ### Latex Document Formatting
+We created a script in MATLAB that converts the outputted classified characters from the Character Classification subsection to a LaTeX file. Our function currently takes in the user-defined lecture title and date metadata, then combines that information with the lecture content in the body of the document. 
+
 1. [Latex Output V2 with buggy newline capabilities](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/projectPDF.m)
 
 

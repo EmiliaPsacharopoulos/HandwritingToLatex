@@ -42,7 +42,7 @@ function pdffilename = projectPDF(filename, title, date)
                 newLines = newLines + 1;
             else
                 if(newLines > 0)
-                    addingBraces = append('\\[', string(newLines), '\', 'baselineskip]')
+                    addingBraces = append('\\[', string(newLines), '\\', 'baselineskip]');
                     fprintf(outputLatex, '\\');
                     fprintf(outputLatex, addingBraces);
                     newLines = 0;
@@ -55,7 +55,7 @@ function pdffilename = projectPDF(filename, title, date)
 
         if(newLines > 0)
             fprintf(outputLatex, '\\');
-            addingBraces = append('\\[', string(newLines), '\', 'baselineskip]')
+            addingBraces = append('\\[', string(newLines), '\\', 'baselineskip]');
             fprintf(outputLatex, addingBraces);
         end
             

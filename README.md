@@ -33,6 +33,7 @@ We implemented these four classification methods using the Python's sklearn libr
 4. [Decision Tree](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/DecisionTree.ipynb)
 
 We implemented a convolutional neural network following the LeNet structure. Our process in Python can be broken down into creating the network architecture, training the network, and making predictions with the network.
+
 5. [Neural Network](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/LeNet_CNN)
 
 ### Latex Document Formatting

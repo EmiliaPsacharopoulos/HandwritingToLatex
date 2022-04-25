@@ -2,19 +2,25 @@
 % (https://www.mathworks.com/matlabcentral/fileexchange/46812-two-dimensional-gaussian-hi-pass-and-low-pass-image-filter), 
 % MATLAB Central File Exchange. Retrieved March 30, 2022. 
 
-cd('/Users/jamesdavid/Documents/Winter2022/EECS 351/project/matlabHandwriting/');
+% MUST EDIT THIS LINE FOR PROJECT TO WORK
+path2project = '/Users/jamesdavid/Documents/Winter2022/EECS 351/project/matlabHandwriting/';
+% The above line should be changed to be whatever the path to the project
+% is on your system, it MUST include a forwardslash at the end (sorry windows users it kinda assumes a unix file path
+% and I'm not terribly familar with windows file paths)
+% The folder with the project must include the folders "pdf" and
+% "tempFolder" named EXACTLY that way
 
-% emnist = load('Matlab/emnist-byclass.mat');
-% model = load('Matlab/tree_emnist.mat');
+cd(path2project);
 
 close all;
-pic = im2double(imread('IMG_6784.jpg'));
-pic = im2gray(pic);
+pic = im2double(imread('IMG_6785.jpg')); % import the image and convert to double (for convolution)
+pic = im2gray(pic); % convert to grayscale
 
 pic = pic'; %new
-pic = flip(pic,1);
+pic = flip(pic,1); % these lines rotate the image sideways, since that is how the program was initially written
 
-A = fft2(pic);
+A = fft2(pic); % lines 22 to 37 are high pass filtering to leave only the edges for better edge detection
+% Credit for this method in Matlab given at the top of the file
 A1 = fftshift(A);
 
 [M N]=size(A); % image size
@@ -35,19 +41,17 @@ sx = [-1 0 1;-2 0 2;-1 0 1];
 sy = [-1 -2 -1;0 0 0;1 2 1];
 picx = abs(conv2(B2,sx));
 picy = abs(conv2(B2,sy));
-eimg = picx+picy;
-
-% eimg = edge(eimg, "Sobel");
-% mask = zeros(size(eimg));
-% mask(25:end-25,25:end-25) = 1;
-% eimg = activecontour(eimg,mask,200,'edge');
+eimg = picx+picy; % this chunk is edge detection with the matricies given in HW7
+% again we aren't using Matlab's "edge" method because it did not perform
+% as well as we needed it to
 
 text = imbinarize(eimg);
 text = bwareaopen(imfill(text,"holes"),30);
-% text = bwconvhull(text,'objects');
-text = bwpropfilt(text, 'Area', 200);
+text = bwpropfilt(text, 'Area', 200); % These lines convert the image to a binary
+% representation and fill closed spaces (letters) and remove spaces that
+% are particularly small
 
-sw1 = 0;
+sw1 = 0; % these two loops are our own filters, remove particularly thin lines (scratches on the board)
 nones = 0;
 for row = 1:size(text,1)
     sw1 = 0;
@@ -57,7 +61,7 @@ for row = 1:size(text,1)
             sw1 = 1;
             nones = nones + 1;
         elseif(sw1)
-            if(nones < 10) %was 20
+            if(nones < 10) %was 20 10 for certain images
                 text(row,col-nones:col) = 0;
             end
             sw1 = 0;
@@ -74,7 +78,7 @@ for col = 1:size(text,2)
             sw1 = 1;
             nones = nones + 1;
         elseif(sw1)
-            if(nones < 10) %was 20
+            if(nones < 10) %was 20 10 for certain images
                 text(row-nones:row,col) = 0;
             end
             sw1 = 0;
@@ -83,7 +87,7 @@ for col = 1:size(text,2)
     end
 end
 
-[B,L,n,A] = bwboundaries(text,'noholes');
+[B,L,n,A] = bwboundaries(text,'noholes'); % this will find and index those closed spaces left for classification
 setFigure(1,2);
 
 % hold on;
@@ -102,7 +106,7 @@ outputString = "";
 while(col < endCol)
     col = col + 1;
     colSum = sum(text(:,col));
-    if(colSum < 750)
+    if(colSum < 750) % if a line intersectes a particularly large amount of white (letters)
         continue;
     end
     maxLets = 0;
@@ -123,55 +127,209 @@ while(col < endCol)
             maxLets = length(lets);
             maxCol = coln;
         end
-    end
+    end % these above lines will search for a line that intersects the most unique letters, gives a better estimation of the line of letters
     
     firstLet = 1;
     prevRow = size(L,1);
-    for row = size(L,1):-1:1
+    row = size(L,1);
+    while(row >= 1) % now we go along the line, grabbing each letter and feeding it to classifier
+        if(L(row,maxCol) ~= 0)
+            if(~ismember(L(row,maxCol),alreadyDone))
+                bound = B{L(row,maxCol)};
+                if(max(bound(:,1)) - min(bound(:,1)) < 10)
+                    alreadyDone(aDidex) = L(row,maxCol);
+                    aDidex = aDidex + 1;
+                    continue;
+                end
+                if(firstLet)
+                    outputString = append(outputString," \\newline ");
+                    maxAy = max(bound(:,1));
+                end
+                letter = poly2mask(bound(:,2),bound(:,1),size(pic,1),size(pic,2));
+                picNew = pic .* letter;
+                picNew(picNew == 0) = 0.75;
+                imshow(picNew);
+                if(abs(max(bound(:,1)) - maxAy) > 200) %was 250, 500
+                    outputString = append(outputString," ");
+                end
+                if(min(bound(:,2)) == max(bound(:,2)))
+                    maxAx = max(bound(:,2)) + 1;
+                else
+                    maxAx = max(bound(:,2));
+                end
+                
+                minAx = min(bound(:,2));
+    
+                if(min(bound(:,1)) == max(bound(:,1)))
+                    maxAy = max(bound(:,1)) + 1;
+                else
+                    maxAy = max(bound(:,1));
+                end
+    
+                minAy = min(bound(:,1));
+    
+                %axis([minAx-20 maxAx+5 minAy-20 maxAy+20]);
+                axis([minAx maxAx minAy maxAy]);
+                axis off;
+                set(gca,'xdir','reverse');
+                set(gca,'view',[90 -90]);
+                alreadyDone(aDidex) = L(row,maxCol);
+                aDidex = aDidex + 1;
+                saveas(gcf,[path2project, 'tempFolder/current.png']);
+                let = im2bw(imread([path2project, 'tempFolder/current.png']));
+    %             let = imbinarize(im2gray(imread('/Users/jamesdavid/Documents/Winter2022/EECS 351/project/matlabHandwriting/tempFolder/current.png')));
+                let = imcomplement(let);
+                let = imresize(let,[28 28]);
+                label = predict_letter(let);
 
-        if(L(row,maxCol) ~= 0 && ~ismember(L(row,maxCol),alreadyDone))
-            if(firstLet)
-                outputString = append(outputString," \\newline ");
+                if(strcmp(string(label),'l') || strcmp(string(label),'I') || strcmp(string(label),'1') || strcmp(string(label),'J'))
+                        % here this feedback loop looks for the different
+                        % parts of discontinuous symbols
+                    lettop = min(bound(:,2));
+
+                    letBounds = [min(bound(:,1)) max(bound(:,1))];
+
+                    if(lettop - 200 < 1)
+                        start = 1;
+                    else
+                        start = lettop - 200;
+                    end
+                    
+                    for j = start:lettop
+                        for k = letBounds(1):letBounds(2)
+                            if(L(k,j) ~= 0 && ~ismember(L(k,j),alreadyDone))
+                                if(strcmp(string(label),'J'))
+                                    label = 'j';
+                                    break;
+                                else
+                                    label = 'i';
+                                    break;
+                                end
+                            end
+                        end
+
+                        if(strcmp(string(label),'j') || strcmp(string(label),'i'))
+                            break;
+                        end
+
+                    end
+
+                end
+
+                outputString = append(outputString,string(label));
+                firstLet = 0;
+                1;
+                row = min(bound(:,1));
             end
-            bound = B{L(row,maxCol)};
-            letter = poly2mask(bound(:,2),bound(:,1),size(pic,1),size(pic,2));
-            picNew = pic .* letter;
-            picNew(picNew == 0) = 0.75;
-            imshow(picNew);
-%             letter = ~letter;
-%             imshow(letter);
-            axis([min(bound(:,2)) max(bound(:,2)) min(bound(:,1)) max(bound(:,1))]);
-            axis off;
-            set(gca,'xdir','reverse');
-            set(gca,'view',[90 -90]);
-            alreadyDone(aDidex) = L(row,maxCol);
-            aDidex = aDidex + 1;
-            saveas(gcf,'/Users/jamesdavid/Documents/Winter2022/EECS 351/project/matlabHandwriting/tempFolder/current.png');
-            let = im2bw(imread('/Users/jamesdavid/Documents/Winter2022/EECS 351/project/matlabHandwriting/tempFolder/current.png'));
-%             let = imbinarize(im2gray(imread('/Users/jamesdavid/Documents/Winter2022/EECS 351/project/matlabHandwriting/tempFolder/current.png')));
-            let = imcomplement(let);
-            let = imresize(let,[28 28]);
-%             let = let(:)';
-%             pred = predict(model.Mdl, let);
-%             label = char(emnist.dataset.mapping(pred+1,2));
-%             imwrite(let,'/Users/jamesdavid/Documents/Winter2022/EECS 351/project/matlabHandwriting/tempFolder/current.jpg');
-%             label = py.nnpredict.predict_letter('/Users/jamesdavid/Documents/Winter2022/EECS 351/project/matlabHandwriting/tempFolder/current.jpg');
-            label = predict_letter(let);
-            outputString = append(outputString,string(label));
-            if(prevRow - row > 250)
-                outputString = append(outputString," ");
+        else % this second loop is to account for slanting, it searches a little off our line to see if there are any nearby letters (down more than up)
+            if(maxCol - 50 < 1)
+                start = 1;
+            else
+                start = maxCol - 50;
             end
-            prevRow = row;
-            firstLet = 0;
-            1;
-            
+            if(maxCol + 100 > size(text,2))
+                ed = size(text,2);
+            else
+                ed = maxCol + 100;
+            end
+            for i = start:ed
+                if(L(row,i) ~= 0 && ~ismember(L(row,i),alreadyDone))
+                    bound = B{L(row,i)};
+                    if(max(bound(:,1)) - min(bound(:,1)) < 10)
+                        alreadyDone(aDidex) = L(row,i);
+                        aDidex = aDidex + 1;
+                        continue;
+                    end
+                    if(firstLet)
+                        outputString = append(outputString," \\newline ");
+                        maxAy = max(bound(:,1));
+                    end
+                    letter = poly2mask(bound(:,2),bound(:,1),size(pic,1),size(pic,2));
+                    picNew = pic .* letter;
+                    picNew(picNew == 0) = 0.75;
+                    imshow(picNew);
+                    if(abs(max(bound(:,1)) - maxAy) > 200) %was 250, 500
+                        outputString = append(outputString," ");
+                    end
+                    if(min(bound(:,2)) == max(bound(:,2)))
+                        maxAx = max(bound(:,2)) + 1;
+                    else
+                        maxAx = max(bound(:,2));
+                    end
+                    
+                    minAx = min(bound(:,2));
+        
+                    if(min(bound(:,1)) == max(bound(:,1)))
+                        maxAy = max(bound(:,1)) + 1;
+                    else
+                        maxAy = max(bound(:,1));
+                    end
+        
+                    minAy = min(bound(:,1));
+        
+                    %axis([minAx-20 maxAx+5 minAy-20 maxAy+20]);
+                    axis([minAx maxAx minAy maxAy]);
+                    axis off;
+                    set(gca,'xdir','reverse');
+                    set(gca,'view',[90 -90]);
+                    alreadyDone(aDidex) = L(row,i);
+                    aDidex = aDidex + 1;
+                    saveas(gcf,[path2project, 'tempFolder/current.png']);
+                    let = im2bw(imread([path2project, 'tempFolder/current.png']));
+        %             let = imbinarize(im2gray(imread('/Users/jamesdavid/Documents/Winter2022/EECS 351/project/matlabHandwriting/tempFolder/current.png')));
+                    let = imcomplement(let);
+                    let = imresize(let,[28 28]);
+                    label = predict_letter(let);
+
+                    if(strcmp(string(label),'l') || strcmp(string(label),'I') || strcmp(string(label),'1') || strcmp(string(label),'J'))
+                        
+                        lettop = min(bound(:,2));
+    
+                        letBounds = [min(bound(:,1)) max(bound(:,1))];
+    
+                        if(lettop - 200 < 1)
+                            start = 1;
+                        else
+                            start = lettop - 200;
+                        end
+                        
+                        for j = start:lettop
+                            for k = letBounds(1):letBounds(2)
+                                if(L(k,j) ~= 0 && ~ismember(L(k,j),alreadyDone))
+                                    if(strcmp(string(label),'J'))
+                                        label = 'j';
+                                        break;
+                                    else
+                                        label = 'i';
+                                        break;
+                                    end
+                                end
+                            end
+
+                            if(strcmp(string(label),'j') || strcmp(string(label),'i'))
+                                break;
+                            end
+
+                        end
+
+                    end
+
+                    outputString = append(outputString,string(label));
+                    firstLet = 0;
+                    1;
+                    row = min(bound(:,1));
+                    break;
+                end
+            end
         end
+        row = row - 1;
     end
     col = maxCol;
 end
 outputString = extractBetween(outputString,12,strlength(outputString));
-
-study_home = '/Users/jamesdavid/Documents/Winter2022/EECS 351/project/matlabHandwriting/pdf/';
+% We not output everything to a properly formatted latex document that can
+% be compiled by you favorite compiler
+study_home = [path2project, 'pdf/'];
 
 
 cd(study_home);

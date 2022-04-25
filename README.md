@@ -11,7 +11,13 @@ Our overarching goal for the project is to develop an algorithm that allows a us
 3. Classifying each individual character.
 4. Outputting that classified character to a Latex document.
 
+![flowchart](https://user-images.githubusercontent.com/84528674/165018351-2b05c0e2-7967-49e4-bc2d-b2d0b41fc758.jpg)
+
+## Project Implementation
+
 This GitHub repository hosts our code for our whole project. Click the hyperlinks below to access more information regarding our process implementing each subsection, and the project code in its entirety. 
+
+
 
 ### Image Processing and Filtering
 

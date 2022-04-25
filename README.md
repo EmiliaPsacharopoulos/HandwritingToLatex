@@ -51,4 +51,9 @@ We implemented a convolutional neural network following the LeNet structure. Our
 1. [Data Conditioning](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/data_conditioning.m)
 2. [Model Training](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/train_test.m)
 
-
+## Authors
+* Emilia Psacharopoulos
+* Enakshi Deb
+* Maura Mulligan
+* James Wishart
+* Ritika Pansare

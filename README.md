@@ -11,6 +11,8 @@ Our overarching goal for the project is to develop an algorithm that allows a us
 3. Classifying each individual character.
 4. Outputting that classified character to a Latex document.
 
+See our [team website](https://sites.google.com/umich.edu/eecs-351-handwriting-to-latex/home?authuser=0) for more information regarding this project.
+
 ![flowchart](https://user-images.githubusercontent.com/84528674/165018351-2b05c0e2-7967-49e4-bc2d-b2d0b41fc758.jpg)
 This flowchart depicts the project architecture of the connections between all of our subsystems. Image © Team original work.
 
@@ -37,6 +39,8 @@ We implemented a convolutional neural network following the LeNet structure. Our
 5. [Neural Network](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/LeNet_CNN)
 
 ### Latex Document Formatting
+1. [Latex Output V1 with no newline capabilities](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/projectPDF.m)
+2. [Latex Output V2 with buggy newline capabilities]()
 
 
 ###  Project Code in its Entirety
@@ -47,11 +51,4 @@ We implemented a convolutional neural network following the LeNet structure. Our
 1. [Data Conditioning](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/data_conditioning.m)
 2. [Model Training](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/train_test.m)
 
-##### Edge Detection
 
-##### Latex Output
-1. [Latex Output V1 with no newline capabilities](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/projectPDF.m)
-2. [Latex Output V2 with buggy newline capabilities]()
-
-
-See our [team website](https://sites.google.com/umich.edu/eecs-351-handwriting-to-latex/home?authuser=0) for more information regarding this project.

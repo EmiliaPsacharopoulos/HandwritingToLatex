@@ -11,7 +11,21 @@ Our overarching goal for the project is to develop an algorithm that allows a us
 3. Classifying each individual character.
 4. Outputting that classified character to a Latex document.
 
-This GitHub repository hosts our code for our whole project. Click the hyperlinks below to access more information regarding our process implementing each subsection. 
+This GitHub repository hosts our code for our whole project. Click the hyperlinks below to access more information regarding our process implementing each subsection, and the project code in its entirety. 
+
+### Image Processing and Filtering
+
+
+### Character Isolation
+
+
+### Character Classification
+
+
+### Latex Document Formatting
+
+
+###  Project Code in its Entirety
 
 ##### Python Classifiers
 1. [K- Nearest Neighbor](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/KNearestNeighbors.ipynb)

@@ -24,11 +24,13 @@ This GitHub repository hosts all code for our entire project implementation. Cli
 ### Image Processing and Filtering
 Our main objective of this process is distinguishing the handwriting from the blemishes and scratches on the given surface. We applied various filtering and image processing techniques in MATLAB to manipulate the signal and only assign value to detected handwriting information. The images to the right give a quick demonstration towards the purpose of this subsection. Our signal processing is lossy because the handwritten characters and numbers containing encircled regions is completely filled. As a result, we implemented a feedback loop between the Character Isolation and Classification subsystems to further investigate the area around the bounded region sent to the classifier.
 
-
-TO DO
+The Image Processing and Filtering subsystem is located in the same file as the Character Isolation code.
+1. [Edges](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/edgesd.m)
 
 ### Character Isolation
 This section is highly dependent on the handwriting style of any individual image. We needed to take into account that the spacing between characters will vary heavily, and that nobody can write on a perfectly straight line. This means that our system must be shift invariant to correct the character separation issue, and rotation invariant to correct the imperfect lines of writing. The character isolation process was definitely the most algorithmically-intensive process to design in our project due to the difficulty of making this subsystem shift and rotation invariant. 
+
+The Character Isolation subsystem is located in the same file as the Image Processing and Filtering code.
 1. [Edges](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/edgesd.m)
 
 

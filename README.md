@@ -10,6 +10,7 @@ Our overarching goal for the project is to develop an algorithm that allows a us
 2. Isolating each individual character.
 3. Classifying each individual character.
 4. Outputting that classified character to a Latex document.
+
 This GitHub repository hosts our code for our whole project. Click the hyperlinks below to access more information regarding our process implementing each subsection. 
 
 ##### Python Classifiers

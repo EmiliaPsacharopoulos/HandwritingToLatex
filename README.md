@@ -22,13 +22,19 @@ This flowchart depicts the project architecture of the connections between all o
 This GitHub repository hosts all code for our entire project implementation. Click the hyperlinks below to access more information regarding our process implementing each subsection, and the project code in its entirety. 
 
 ### Image Processing and Filtering
+Our main objective of this process is distinguishing the handwriting from the blemishes and scratches on the given surface. We applied various filtering and image processing techniques in MATLAB to manipulate the signal and only assign value to detected handwriting information. The images to the right give a quick demonstration towards the purpose of this subsection. Our signal processing is lossy because the handwritten characters and numbers containing encircled regions is completely filled. As a result, we implemented a feedback loop between the Character Isolation and Classification subsystems to further investigate the area around the bounded region sent to the classifier.
+
+
 TO DO
 
 ### Character Isolation
+This section is highly dependent on the handwriting style of any individual image. We needed to take into account that the spacing between characters will vary heavily, and that nobody can write on a perfectly straight line. This means that our system must be shift invariant to correct the character separation issue, and rotation invariant to correct the imperfect lines of writing. The character isolation process was definitely the most algorithmically-intensive process to design in our project due to the difficulty of making this subsystem shift and rotation invariant. 
+
+
 TO DO
 
 ### Character Classification
-We implemented these four classification methods using the Python's sklearn library to compare the classifiers' performances and opt to use the most efficient classifier or machine learning algorithm. Our Jupiter Notebook files for these methods are almost identical, apart from setting nb_classifier to the given method.
+This section takes in an image of an isolated character from the Character Isolation process, and classifies that image as a character. We decided to compare the predicted character outputs of five common character classification techniques using Python's sklearn classification library. We trained each classifier on the EMNIST dataset's 60,000 training images and then tested each with EMNIST's 10,000 testing images, and then ranked the overall efficiency of each classifier according to its accuracy while also considering speed, and memory. Our Jupiter Notebook files for these methods are almost identical, apart from setting nb_classifier to the given method.
 1. [K- Nearest Neighbor](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/KNearestNeighbors.ipynb)
 2. [Multinomial Naïve Bayes](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/GaussianNB.ipynb)
 3. [Support Vector Machine](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/SVM.ipynb)
@@ -38,15 +44,23 @@ We implemented a convolutional neural network following the LeNet structure. Our
 
 5. [Neural Network](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/LeNet_CNN)
 
+The five classification methods listed above were for our own testing purposes in choosing the best method for this specific application. Overall, the Support Vector Machine led in accuracy, but we decided to use the LeNet Neural Network classification technique for its high accuracy, low memory usage, speed efficiency, and straightforward interface with MATLAB.
+
+
+Our character classification subsystem implementation in MATLAB can be split into two primary processes: image processing and executing the model. Each process is its own script.
+
+1. [Data Conditioning](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/data_conditioning.m)
+2. [Model Training](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/train_test.m)
+
+
+
 ### Latex Document Formatting
 1. [Latex Output V2 with buggy newline capabilities](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/projectPDF.m)
+
 
 ###  Project Code in its Entirety
 TO DO
 
-##### Matlab Models
-1. [Data Conditioning](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/data_conditioning.m)
-2. [Model Training](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/train_test.m)
 
 ## Authors
 * Emilia Psacharopoulos

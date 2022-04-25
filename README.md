@@ -22,10 +22,10 @@ This flowchart depicts the project architecture of the connections between all o
 This GitHub repository hosts all code for our entire project implementation. Click the hyperlinks below to access more information regarding our process implementing each subsection, and the project code in its entirety. 
 
 ### Image Processing and Filtering
-
+TO DO
 
 ### Character Isolation
-
+TO DO
 
 ### Character Classification
 We implemented these four classification methods using the Python's sklearn library to compare the classifiers' performances and opt to use the most efficient classifier or machine learning algorithm. Our Jupiter Notebook files for these methods are almost identical, apart from setting nb_classifier to the given method.
@@ -39,12 +39,10 @@ We implemented a convolutional neural network following the LeNet structure. Our
 5. [Neural Network](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/LeNet_CNN)
 
 ### Latex Document Formatting
-2. [Latex Output V2 with buggy newline capabilities](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/projectPDF.m)
-
+1. [Latex Output V2 with buggy newline capabilities](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/projectPDF.m)
 
 ###  Project Code in its Entirety
-
-
+TO DO
 
 ##### Matlab Models
 1. [Data Conditioning](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/data_conditioning.m)

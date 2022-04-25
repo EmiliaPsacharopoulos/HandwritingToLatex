@@ -39,8 +39,7 @@ We implemented a convolutional neural network following the LeNet structure. Our
 5. [Neural Network](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/LeNet_CNN)
 
 ### Latex Document Formatting
-1. [Latex Output V1 with no newline capabilities](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/projectPDF.m)
-2. [Latex Output V2 with buggy newline capabilities]()
+2. [Latex Output V2 with buggy newline capabilities](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/projectPDF.m)
 
 
 ###  Project Code in its Entirety

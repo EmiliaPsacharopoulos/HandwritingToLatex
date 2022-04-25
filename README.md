@@ -26,20 +26,19 @@ This GitHub repository hosts all code for our entire project implementation. Cli
 
 
 ### Character Classification
-We implemented these four classification methods using the Python's sklearn library to compare the classifiers' performances and opt to use the most efficient classifier or machine learning algorithm. Our Jupiter Notebook files for these methods are almost identical, apart from setting nb_classifier to the given method.
-
+We implemented these five classification methods using the Python's sklearn library to compare the classifiers' performances and opt to use the most efficient classifier or machine learning algorithm. Our Jupiter Notebook files for these methods are almost identical, apart from setting nb_classifier to the given method.
+1. [K- Nearest Neighbor](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/KNearestNeighbors.ipynb)
+2. [Multinomial Naïve Bayes](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/GaussianNB.ipynb)
+3. [Support Vector Machine](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/SVM.ipynb)
+4. [Decision Tree](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/DecisionTree.ipynb)
+5. [Neural Network](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/LeNet_CNN)
 
 ### Latex Document Formatting
 
 
 ###  Project Code in its Entirety
 
-##### Python Classifiers
-1. [K- Nearest Neighbor](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/KNearestNeighbors.ipynb)
-2. [Multinomial Naïve Bayes](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/GaussianNB.ipynb)
-3. [Support Vector Machine](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/SVM.ipynb)
-4. [Decision Tree](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/DecisionTree.ipynb)
-5. [Neural Network](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/LeNet_CNN)
+
 
 ##### Matlab Models
 1. [Data Conditioning](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/data_conditioning.m)

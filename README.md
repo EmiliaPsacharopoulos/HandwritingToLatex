@@ -29,9 +29,8 @@ TO DO
 
 ### Character Isolation
 This section is highly dependent on the handwriting style of any individual image. We needed to take into account that the spacing between characters will vary heavily, and that nobody can write on a perfectly straight line. This means that our system must be shift invariant to correct the character separation issue, and rotation invariant to correct the imperfect lines of writing. The character isolation process was definitely the most algorithmically-intensive process to design in our project due to the difficulty of making this subsystem shift and rotation invariant. 
+1. [Edges](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/edgesd.m)
 
-
-TO DO
 
 ### Character Classification
 This section takes in an image of an isolated character from the Character Isolation process, and classifies that image as a character. We decided to compare the predicted character outputs of five common character classification techniques using Python's sklearn classification library. We trained each classifier on the EMNIST dataset's 60,000 training images and then tested each with EMNIST's 10,000 testing images, and then ranked the overall efficiency of each classifier according to its accuracy while also considering speed, and memory. Our Jupiter Notebook files for these methods are almost identical, apart from setting nb_classifier to the given method.

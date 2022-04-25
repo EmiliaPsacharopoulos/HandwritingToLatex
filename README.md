@@ -17,9 +17,7 @@ This flowchart depicts the project architecture of the connections between all o
 
 ## Project Implementation
 
-This GitHub repository hosts our code for our whole project. Click the hyperlinks below to access more information regarding our process implementing each subsection, and the project code in its entirety. 
-
-
+This GitHub repository hosts all code for our entire project implementation. Click the hyperlinks below to access more information regarding our process implementing each subsection, and the project code in its entirety. 
 
 ### Image Processing and Filtering
 
@@ -28,6 +26,7 @@ This GitHub repository hosts our code for our whole project. Click the hyperlink
 
 
 ### Character Classification
+We implemented these four classification methods using the Python's sklearn library to compare the classifiers' performances and opt to use the most efficient classifier or machine learning algorithm. Our Jupiter Notebook files for these methods are almost identical, apart from setting nb_classifier to the given method.
 
 
 ### Latex Document Formatting

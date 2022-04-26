@@ -1,4 +1,4 @@
-function prediction = predict_letter(image)
+function [prediction1, prediction2] = predict_letter(image1, image2)
 
     % NEURAL NETWORK (87% accuracy)
     % format: [28x28], inverted grayscale (white writing on black background)
@@ -7,12 +7,14 @@ function prediction = predict_letter(image)
     %               (2) py.importlib.import_module('nnpredict')
     %               * run this before running or calling the function 
     
-    image = image/max(image(:));    % normalize
-    %imshow(image)
-    image = image';                 % transpose
+    image1 = image1/max(image1(:));    % normalize
+    image2 = image2/max(image2(:));    % normalize
+%     imshow(image);
+    image2 = image2';                 % transpose
     
     py.importlib.import_module('numpy');
-    prediction = py.nnpredict.predict_letter(py.numpy.array(image));
+    prediction1 = py.nnpredict_hasy.predict_letter(py.numpy.array(image1));
+    prediction2 = py.nnpredict.predict_letter(py.numpy.array(image2));
     
     
 %     % DECISION TREE MODEL (67% accuracy at best)

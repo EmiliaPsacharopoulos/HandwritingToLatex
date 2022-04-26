@@ -12,9 +12,18 @@ path2project = '/Users/jamesdavid/Documents/Winter2022/EECS 351/project/matlabHa
 
 cd(path2project);
 
+math = 0;
+
 close all;
-pic = im2double(imread('IMG_6785.jpg')); % import the image and convert to double (for convolution)
+switch math
+    case 1
+        pic = im2double(imread('math.jpeg')); % import the image and convert to double (for convolution)
+    case 0
+        pic = im2double(imread('IMG_6785.jpg'));
+end
 pic = im2gray(pic); % convert to grayscale
+
+
 
 pic = pic'; %new
 pic = flip(pic,1); % these lines rotate the image sideways, since that is how the program was initially written
@@ -51,6 +60,15 @@ text = bwpropfilt(text, 'Area', 200); % These lines convert the image to a binar
 % representation and fill closed spaces (letters) and remove spaces that
 % are particularly small
 
+switch math
+    case 1
+        minlen = 5;
+        collen = 100;
+    case 0
+        minlen = 10;
+        collen = 750;
+end
+
 sw1 = 0; % these two loops are our own filters, remove particularly thin lines (scratches on the board)
 nones = 0;
 for row = 1:size(text,1)
@@ -61,7 +79,7 @@ for row = 1:size(text,1)
             sw1 = 1;
             nones = nones + 1;
         elseif(sw1)
-            if(nones < 10) %was 20 10 for certain images
+            if(nones < minlen) %was 20 10 for certain images
                 text(row,col-nones:col) = 0;
             end
             sw1 = 0;
@@ -78,7 +96,7 @@ for col = 1:size(text,2)
             sw1 = 1;
             nones = nones + 1;
         elseif(sw1)
-            if(nones < 10) %was 20 10 for certain images
+            if(nones < minlen) %was 20 10 for certain images
                 text(row-nones:row,col) = 0;
             end
             sw1 = 0;
@@ -103,10 +121,11 @@ aDidex = 1;
 endCol = size(L,2);
 col = 1;
 outputString = "";
+outputString2 = "";
 while(col < endCol)
     col = col + 1;
     colSum = sum(text(:,col));
-    if(colSum < 750) % if a line intersectes a particularly large amount of white (letters)
+    if(colSum < collen) % 750 if a line intersectes a particularly large amount of white (letters)
         continue;
     end
     maxLets = 0;
@@ -143,14 +162,23 @@ while(col < endCol)
                 end
                 if(firstLet)
                     outputString = append(outputString," \\newline ");
+                    outputString2 = append(outputString2," \\newline ");
                     maxAy = max(bound(:,1));
                 end
-                letter = poly2mask(bound(:,2),bound(:,1),size(pic,1),size(pic,2));
+                switch math
+                    case 0
+                        letter = poly2mask(bound(:,2),bound(:,1),size(pic,1),size(pic,2));
+                    case 1
+                        letter = poly2mask([min(bound(:,2)), min(bound(:,2)), max(bound(:,2)), max(bound(:,2))],[max(bound(:,1)), min(bound(:,1)), min(bound(:,1)), max(bound(:,1))],size(pic,1),size(pic,2));
+                end
                 picNew = pic .* letter;
-                picNew(picNew == 0) = 0.75;
+                if(~math)
+                    picNew(picNew == 0) = 0.75;
+                end
                 imshow(picNew);
                 if(abs(max(bound(:,1)) - maxAy) > 200) %was 250, 500
                     outputString = append(outputString," ");
+                    outputString2 = append(outputString2," ");
                 end
                 if(min(bound(:,2)) == max(bound(:,2)))
                     maxAx = max(bound(:,2)) + 1;
@@ -176,11 +204,16 @@ while(col < endCol)
                 alreadyDone(aDidex) = L(row,maxCol);
                 aDidex = aDidex + 1;
                 saveas(gcf,[path2project, 'tempFolder/current.png']);
+%                 let = im2gray(im2double(imread([path2project, 'tempFolder/current.png'])));
                 let = im2bw(imread([path2project, 'tempFolder/current.png']));
+
     %             let = imbinarize(im2gray(imread('/Users/jamesdavid/Documents/Winter2022/EECS 351/project/matlabHandwriting/tempFolder/current.png')));
-                let = imcomplement(let);
-                let = imresize(let,[28 28]);
-                label = predict_letter(let);
+                %let = imcomplement(let);
+                let2 = imcomplement(let);
+                let1 = imresize(let,[32 32]);
+                let2 = imresize(let2,[28 28]);
+                
+                [label1, label] = predict_letter(let1, let2);
 
                 if(strcmp(string(label),'l') || strcmp(string(label),'I') || strcmp(string(label),'1') || strcmp(string(label),'J'))
                         % here this feedback loop looks for the different
@@ -216,7 +249,148 @@ while(col < endCol)
 
                 end
 
+                if(strcmp(string(label1),'E') || strcmp(string(label1),'\Sigma') || strcmp(string(label1),'S') || strcmp(string(label1),'\int'))
+                    % here this feedback loop looks for the different
+                    % parts of discontinuous symbols
+                    lettop = min(bound(:,2));
+
+                    letBounds = [min(bound(:,1)) max(bound(:,1))];
+
+                    if(lettop - 200 < 1)
+                        start = 1;
+                    else
+                        start = lettop - 200;
+                    end
+                    
+                    for j = start:lettop
+                        for k = letBounds(1):letBounds(2)
+                            if(L(k,j) ~= 0 && ~ismember(L(k,j),alreadyDone))
+                                bound = B{L(k,j)};
+                                letter = poly2mask([min(bound(:,2)), min(bound(:,2)), max(bound(:,2)), max(bound(:,2))],[max(bound(:,1)), min(bound(:,1)), min(bound(:,1)), max(bound(:,1))],size(pic,1),size(pic,2));
+                                picNew = pic .* letter;
+                                imshow(picNew);
+                                if(abs(max(bound(:,1)) - maxAy) > 200) %was 250, 500
+                                    outputString = append(outputString," ");
+                                    outputString2 = append(outputString2," ");
+                                end
+                                if(min(bound(:,2)) == max(bound(:,2)))
+                                    maxAx = max(bound(:,2)) + 1;
+                                else
+                                    maxAx = max(bound(:,2));
+                                end
+                                
+                                minAx = min(bound(:,2));
+                    
+                                if(min(bound(:,1)) == max(bound(:,1)))
+                                    maxAy = max(bound(:,1)) + 1;
+                                else
+                                    maxAy = max(bound(:,1));
+                                end
+                    
+                                minAy = min(bound(:,1));
+                    
+                                %axis([minAx-20 maxAx+5 minAy-20 maxAy+20]);
+                                axis([minAx maxAx minAy maxAy]);
+                                axis off;
+                                set(gca,'xdir','reverse');
+                                set(gca,'view',[90 -90]);
+                                alreadyDone(aDidex) = L(row,maxCol);
+                                aDidex = aDidex + 1;
+                                saveas(gcf,[path2project, 'tempFolder/current.png']);
+                %                 let = im2gray(im2double(imread([path2project, 'tempFolder/current.png'])));
+                                let = im2bw(imread([path2project, 'tempFolder/current.png']));
+                                let2 = imcomplement(let);
+                                let1 = imresize(let,[32 32]);
+                                let2 = imresize(let2,[28 28]);
+                                [dc, num] = predict_letter(let1, let2);
+                                if(strcmp(string(label1),'E') || strcmp(string(label1),'\Sigma'))
+                                    label1 = strjoin(string(['\sum^{',string(num),'}']),'');
+                                else
+                                    label1 = strjoin(string(['\int^{',string(num),'}']),'');
+                                end
+                                break;
+                            end
+                        end
+
+                        if(contains(string(label1),'sum') || contains(string(label1),'int^'))
+                            break;
+                        end
+
+                    end
+
+                    letbot = max(bound(:,2));
+
+                    letBounds = [min(bound(:,1)) max(bound(:,1))];
+
+                    if(letbot + 200 > size(L,2))
+                        start = size(L,2);
+                    else
+                        start = letbot + 200;
+                    end
+
+                    for j = letbot:start
+                        for k = letBounds(1):letBounds(2)
+                            if(L(k,j) ~= 0 && ~ismember(L(k,j),alreadyDone))
+                                bound = B{L(k,j)};
+                                letter = poly2mask([min(bound(:,2)), min(bound(:,2)), max(bound(:,2)), max(bound(:,2))],[max(bound(:,1)), min(bound(:,1)), min(bound(:,1)), max(bound(:,1))],size(pic,1),size(pic,2));
+                                picNew = pic .* letter;
+                                imshow(picNew);
+                                if(abs(max(bound(:,1)) - maxAy) > 200) %was 250, 500
+                                    outputString = append(outputString," ");
+                                    outputString2 = append(outputString2," ");
+                                end
+                                if(min(bound(:,2)) == max(bound(:,2)))
+                                    maxAx = max(bound(:,2)) + 1;
+                                else
+                                    maxAx = max(bound(:,2));
+                                end
+                                
+                                minAx = min(bound(:,2));
+                    
+                                if(min(bound(:,1)) == max(bound(:,1)))
+                                    maxAy = max(bound(:,1)) + 1;
+                                else
+                                    maxAy = max(bound(:,1));
+                                end
+                    
+                                minAy = min(bound(:,1));
+                    
+                                %axis([minAx-20 maxAx+5 minAy-20 maxAy+20]);
+                                axis([minAx maxAx minAy maxAy]);
+                                axis off;
+                                set(gca,'xdir','reverse');
+                                set(gca,'view',[90 -90]);
+                                alreadyDone(aDidex) = L(row,maxCol);
+                                aDidex = aDidex + 1;
+                                saveas(gcf,[path2project, 'tempFolder/current.png']);
+                %                 let = im2gray(im2double(imread([path2project, 'tempFolder/current.png'])));
+                                let = im2bw(imread([path2project, 'tempFolder/current.png']));
+                                let2 = imcomplement(let);
+                                let1 = imresize(let,[32 32]);
+                                let2 = imresize(let2,[28 28]);
+                                [dc, num] = predict_letter(let1, let2);
+                                if(contains(string(label1),'sum'))
+                                    label1 = append(label1,strjoin(['_{=',string(num),'}'],''),'');
+                                else
+                                    label1 = append(label1,strjoin(['_{',string(num),'}'],''),'');
+                                end
+                                break;
+                            end
+                        end
+                        if(contains(string(label1),'_'))
+                            break;
+                        end
+
+                    end
+                end
+
+                if(contains(string(label1),'\'))
+                    label1 = strjoin(string(['$\',string(label1),'$']),'');
+                end
+
                 outputString = append(outputString,string(label));
+                outputString2 = append(outputString2,string(label1));
+
                 firstLet = 0;
                 1;
                 row = min(bound(:,1));
@@ -242,14 +416,23 @@ while(col < endCol)
                     end
                     if(firstLet)
                         outputString = append(outputString," \\newline ");
+                        outputString2 = append(outputString2," \\newline ");
                         maxAy = max(bound(:,1));
                     end
-                    letter = poly2mask(bound(:,2),bound(:,1),size(pic,1),size(pic,2));
+                    switch math
+                        case 0
+                            letter = poly2mask(bound(:,2),bound(:,1),size(pic,1),size(pic,2));
+                        case 1
+                            letter = poly2mask([min(bound(:,2)), min(bound(:,2)), max(bound(:,2)), max(bound(:,2))],[max(bound(:,1)), min(bound(:,1)), min(bound(:,1)), max(bound(:,1))],size(pic,1),size(pic,2));
+                    end
                     picNew = pic .* letter;
-                    picNew(picNew == 0) = 0.75;
+                    if(~math)
+                        picNew(picNew == 0) = 0.75;
+                    end
                     imshow(picNew);
                     if(abs(max(bound(:,1)) - maxAy) > 200) %was 250, 500
                         outputString = append(outputString," ");
+                        outputString2 = append(outputString2," ");
                     end
                     if(min(bound(:,2)) == max(bound(:,2)))
                         maxAx = max(bound(:,2)) + 1;
@@ -276,10 +459,14 @@ while(col < endCol)
                     aDidex = aDidex + 1;
                     saveas(gcf,[path2project, 'tempFolder/current.png']);
                     let = im2bw(imread([path2project, 'tempFolder/current.png']));
+%                     let = im2gray(im2double(imread([path2project, 'tempFolder/current.png'])));
+
         %             let = imbinarize(im2gray(imread('/Users/jamesdavid/Documents/Winter2022/EECS 351/project/matlabHandwriting/tempFolder/current.png')));
-                    let = imcomplement(let);
-                    let = imresize(let,[28 28]);
-                    label = predict_letter(let);
+
+                    let2 = imcomplement(let);
+                    let1 = imresize(let,[32 32]);
+                    let2 = imresize(let2,[28 28]);
+                    [label1, label] = predict_letter(let1, let2);
 
                     if(strcmp(string(label),'l') || strcmp(string(label),'I') || strcmp(string(label),'1') || strcmp(string(label),'J'))
                         
@@ -314,7 +501,148 @@ while(col < endCol)
 
                     end
 
+                    if(strcmp(string(label1),'E') || strcmp(string(label1),'\Sigma') || strcmp(string(label1),'S') || strcmp(string(label1),'\int'))
+                        % here this feedback loop looks for the different
+                        % parts of discontinuous symbols
+                        lettop = min(bound(:,2));
+    
+                        letBounds = [min(bound(:,1)) max(bound(:,1))];
+    
+                        if(lettop - 200 < 1)
+                            start = 1;
+                        else
+                            start = lettop - 200;
+                        end
+                        
+                        for j = start:lettop
+                            for k = letBounds(1):letBounds(2)
+                                if(L(k,j) ~= 0 && ~ismember(L(k,j),alreadyDone))
+                                    bound = B{L(k,j)};
+                                    letter = poly2mask([min(bound(:,2)), min(bound(:,2)), max(bound(:,2)), max(bound(:,2))],[max(bound(:,1)), min(bound(:,1)), min(bound(:,1)), max(bound(:,1))],size(pic,1),size(pic,2));
+                                    picNew = pic .* letter;
+                                    imshow(picNew);
+                                    if(abs(max(bound(:,1)) - maxAy) > 200) %was 250, 500
+                                        outputString = append(outputString," ");
+                                        outputString2 = append(outputString2," ");
+                                    end
+                                    if(min(bound(:,2)) == max(bound(:,2)))
+                                        maxAx = max(bound(:,2)) + 1;
+                                    else
+                                        maxAx = max(bound(:,2));
+                                    end
+                                    
+                                    minAx = min(bound(:,2));
+                        
+                                    if(min(bound(:,1)) == max(bound(:,1)))
+                                        maxAy = max(bound(:,1)) + 1;
+                                    else
+                                        maxAy = max(bound(:,1));
+                                    end
+                        
+                                    minAy = min(bound(:,1));
+                        
+                                    %axis([minAx-20 maxAx+5 minAy-20 maxAy+20]);
+                                    axis([minAx maxAx minAy maxAy]);
+                                    axis off;
+                                    set(gca,'xdir','reverse');
+                                    set(gca,'view',[90 -90]);
+                                    alreadyDone(aDidex) = L(row,maxCol);
+                                    aDidex = aDidex + 1;
+                                    saveas(gcf,[path2project, 'tempFolder/current.png']);
+                    %                 let = im2gray(im2double(imread([path2project, 'tempFolder/current.png'])));
+                                    let = im2bw(imread([path2project, 'tempFolder/current.png']));
+                                    let2 = imcomplement(let);
+                                    let1 = imresize(let,[32 32]);
+                                    let2 = imresize(let2,[28 28]);
+                                    [dc, num] = predict_letter(let1, let2);
+                                    if(strcmp(string(label1),'E') || strcmp(string(label1),'\Sigma'))
+                                        label1 = strjoin(string(['\sum^{',string(num),'}']),'');
+                                    else
+                                        label1 = strjoin(string(['\int^{',string(num),'}']),'');
+                                    end
+                                    break;
+                                end
+                            end
+    
+                            if(contains(string(label1),'sum') || contains(string(label1),'int^'))
+                                break;
+                            end
+    
+                        end
+
+                        letbot = max(bound(:,2));
+    
+                        letBounds = [min(bound(:,1)) max(bound(:,1))];
+    
+                        if(letbot + 200 > size(L,2))
+                            start = size(L,2);
+                        else
+                            start = letbot + 200;
+                        end
+
+                        for j = letbot:start
+                            for k = letBounds(1):letBounds(2)
+                                if(L(k,j) ~= 0 && ~ismember(L(k,j),alreadyDone))
+                                    bound = B{L(k,j)};
+                                    letter = poly2mask([min(bound(:,2)), min(bound(:,2)), max(bound(:,2)), max(bound(:,2))],[max(bound(:,1)), min(bound(:,1)), min(bound(:,1)), max(bound(:,1))],size(pic,1),size(pic,2));
+                                    picNew = pic .* letter;
+                                    imshow(picNew);
+                                    if(abs(max(bound(:,1)) - maxAy) > 200) %was 250, 500
+                                        outputString = append(outputString," ");
+                                        outputString2 = append(outputString2," ");
+                                    end
+                                    if(min(bound(:,2)) == max(bound(:,2)))
+                                        maxAx = max(bound(:,2)) + 1;
+                                    else
+                                        maxAx = max(bound(:,2));
+                                    end
+                                    
+                                    minAx = min(bound(:,2));
+                        
+                                    if(min(bound(:,1)) == max(bound(:,1)))
+                                        maxAy = max(bound(:,1)) + 1;
+                                    else
+                                        maxAy = max(bound(:,1));
+                                    end
+                        
+                                    minAy = min(bound(:,1));
+                        
+                                    %axis([minAx-20 maxAx+5 minAy-20 maxAy+20]);
+                                    axis([minAx maxAx minAy maxAy]);
+                                    axis off;
+                                    set(gca,'xdir','reverse');
+                                    set(gca,'view',[90 -90]);
+                                    alreadyDone(aDidex) = L(row,maxCol);
+                                    aDidex = aDidex + 1;
+                                    saveas(gcf,[path2project, 'tempFolder/current.png']);
+                    %                 let = im2gray(im2double(imread([path2project, 'tempFolder/current.png'])));
+                                    let = im2bw(imread([path2project, 'tempFolder/current.png']));
+                                    let2 = imcomplement(let);
+                                    let1 = imresize(let,[32 32]);
+                                    let2 = imresize(let2,[28 28]);
+                                    [dc, num] = predict_letter(let1, let2);
+                                    if(contains(string(label1),'sum'))
+                                        label1 = append(label1,strjoin(['_{=',string(num),'}'],''),'');
+                                    else
+                                        label1 = append(label1,strjoin(['_{',string(num),'}'],''),'');
+                                    end
+                                    break;
+                                end
+                            end
+                            if(contains(string(label1),'_'))
+                                break;
+                            end
+    
+                        end
+                    end
+
+                if(contains(string(label1),'\'))
+                    label1 = strjoin(string(['$\',string(label1),'$']),'');
+                end
+
                     outputString = append(outputString,string(label));
+                    outputString2 = append(outputString2,string(label1));
+
                     firstLet = 0;
                     1;
                     row = min(bound(:,1));
@@ -327,7 +655,8 @@ while(col < endCol)
     col = maxCol;
 end
 outputString = extractBetween(outputString,12,strlength(outputString));
-% We not output everything to a properly formatted latex document that can
+outputString2 = extractBetween(outputString2,12,strlength(outputString2));
+% We now output everything to a properly formatted latex document that can
 % be compiled by you favorite compiler
 study_home = [path2project, 'pdf/'];
 
@@ -380,6 +709,15 @@ if outputLatex>2
         fprintf(outputLatex, '\\label{Sec%d_L2_Introduction}\n',scanNo);
 
         fprintf(outputLatex, outputString);
+
+        fprintf(outputLatex, '%% Chapter %d\n', scanNo);
+        fprintf(outputLatex, '\\section{Math output from classifier}\n');
+        fprintf(outputLatex, '\\label{section%d}\n', scanNo);
+
+        fprintf(outputLatex, '\\subsection{Output}\n');
+        fprintf(outputLatex, '\\label{Sec%d_L2_Introduction}\n',scanNo);
+
+        fprintf(outputLatex, outputString2);
         
         %
         % trim command: left, bottom, right, top

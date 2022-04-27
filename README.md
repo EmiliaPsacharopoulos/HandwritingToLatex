@@ -62,7 +62,10 @@ We created a script in MATLAB that converts the outputted classified characters 
 
 
 ###  Project Code in its Entirety
-TO DO
+The entire system follows the flowchart inserted above. It can be run by downloading the folder and running. Some things to note before running the demo:
+* You must set up the python environment in MATLAB using pyenv at the command line
+* You must load the python module nnpredict.py
+* You must change the directory to your personal location of the folder
 
 
 ## Authors

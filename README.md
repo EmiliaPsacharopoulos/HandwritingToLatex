@@ -71,10 +71,10 @@ We created a script in MATLAB that converts the outputted classified characters 
 
 
 ###  Project Code in its Entirety
-The entire system follows the flowchart inserted above. It can be run by downloading the folder "matlabHandwriting" and running "edgesd.m". Some things to note before running the demo:
-* You must set up the python environment in MATLAB using pyenv at the command line 
+The entire system follows the flowchart inserted above. It can be run by downloading the folder [matlabHandwriting](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/tree/main/matlabHandwriting) and running [edgesd.m](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/matlabHandwriting/edgesd.m). Some things to note before running the demo:
+* You must set up the python environment in MATLAB using [pyenv](https://www.mathworks.com/help/matlab/ref/pyenv.html) at the command line. We have had far more success setting up the Python virtual environment on Linux computers rather than Windows computers. If this is not working on your Operating System, we have recorded a video demonstration of the full-scale system running on our [team website](https://sites.google.com/umich.edu/eecs-351-handwriting-to-latex/home?authuser=0) in the Processes tab.
 * You must load the python module nnpredict.py
-    * (detailed instructions in [predict_letter](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/matlabHandwriting/predict_letter.m) )
+    * (detailed instructions in [predict_letter.m](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/matlabHandwriting/predict_letter.m) )
 * You must change the directory to your personal location of the folder
 
 

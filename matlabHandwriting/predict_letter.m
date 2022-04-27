@@ -1,10 +1,12 @@
 function [prediction1, prediction2] = predict_letter(image1, image2)
 
-    % NEURAL NETWORK (87% accuracy)
-    % format: [28x28], inverted grayscale (white writing on black background)
-    % file(s): nnpredict.py, lenet.py, model.pth in same directory
+    % NEURAL NETWORK (87-94% accuracy)
+    % format (image1): [32x32], grayscale (black writing on white background)
+    % format (image2): [28x28], inverted grayscale (white writing on black background) 
+    % file(s): nnpredict.py, lenet.py, model.pth, labels.txt, hasy_model.h5, nnpredict_hasy.py in same directory
     % python setup: (1) pyenv("ExecutionMode","OutOfProcess")
     %               (2) py.importlib.import_module('nnpredict')
+    %               (3) py.importlib.import_module('nnpredict_hasy')
     %               * run this before running or calling the function 
     
     image1 = image1/max(image1(:));    % normalize

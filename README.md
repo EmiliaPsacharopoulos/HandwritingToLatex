@@ -58,6 +58,7 @@ We implemented our final version of the Character Classification subsystem as a 
 
 1. [nnpredict_hasy.py](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/matlabHandwriting/nnpredict_hasy.py) or [nnpredict.py](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/matlabHandwriting/nnpredict.py) 
 2. [lenet.py](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/matlabHandwriting/lenet.py)
+3. [model.pth](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/matlabHandwriting/model.pth)
 
 We were only able to setup the virtual Python environment in Linux (not on Windows). To account for any interested parties without access to a Linux system, we record a video demonstration of the full-scale system running on our [team website](https://sites.google.com/umich.edu/eecs-351-handwriting-to-latex/home?authuser=0) in the Processes tab.
 

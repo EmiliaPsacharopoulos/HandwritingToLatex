@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.4.13)  26 APR 2022 17:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.4.13)  27 APR 2022 17:07
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -396,7 +396,7 @@ Package rerunfilecheck Info: File `output.out' has not changed.
 Here is how much of TeX's memory you used:
  9603 strings out of 478994
  138729 string characters out of 5858184
- 444448 words of memory out of 5000000
+ 444431 words of memory out of 5000000
  26958 multiletter control sequences out of 15000+600000
  411142 words of font info for 56 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -405,15 +405,14 @@ Here is how much of TeX's memory you used:
 ></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
 /usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></
-usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></us
-r/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/
-local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/lo
-cal/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/loca
-l/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on output.pdf (2 pages, 91708 bytes).
+usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></us
+r/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/
+local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/lo
+cal/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on output.pdf (2 pages, 83347 bytes).
 PDF statistics:
- 81 PDF objects out of 1000 (max. 8388607)
- 67 compressed objects within 1 object stream
+ 77 PDF objects out of 1000 (max. 8388607)
+ 64 compressed objects within 1 object stream
  8 named destinations out of 1000 (max. 500000)
  33 words of extra memory for PDF output out of 10000 (max. 10000000)
 

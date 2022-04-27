@@ -2,6 +2,11 @@
 % (https://www.mathworks.com/matlabcentral/fileexchange/46812-two-dimensional-gaussian-hi-pass-and-low-pass-image-filter), 
 % MATLAB Central File Exchange. Retrieved March 30, 2022. 
 
+% Latex Generation code adapted from Dr. Oliver Kripfgans
+% University of Michigan - Department of Radiology
+
+lecture = input("What is the Lecture title?\n","s"); % ask user for a title to give the document
+
 % MUST EDIT THIS LINE FOR PROJECT TO WORK
 path2project = '/Users/jamesdavid/Documents/Winter2022/EECS 351/project/matlabHandwriting/';
 % The above line should be changed to be whatever the path to the project
@@ -9,6 +14,12 @@ path2project = '/Users/jamesdavid/Documents/Winter2022/EECS 351/project/matlabHa
 % and I'm not terribly familar with windows file paths)
 % The folder with the project must include the folders "pdf" and
 % "tempFolder" named EXACTLY that way
+
+% Note: much of this could have likely been put in functions but as a
+% consequence of the piecemeal way this was written there are duplicate code chunks,
+% not wanting to debug anymore than necessary the code was left
+% as is, poor practice yes, with a bit more time that would be the first
+% major improvement to how this is written
 
 cd(path2project);
 
@@ -19,7 +30,9 @@ switch math
     case 1
         pic = im2double(imread('math.jpeg')); % import the image and convert to double (for convolution)
     case 0
-        pic = im2double(imread('IMG_6785.jpg'));
+        pic = im2double(imread('IMG_6782.jpg')); % the two images that work best for this are 6785 and 6782, 6796 also works but spacing is poor
+        is96 = 0; % please set this flag if using 6796, this is an issue discussed on the website, different whiteboard
+        % qualities require different thresholds
 end
 pic = im2gray(pic); % convert to grayscale
 
@@ -65,7 +78,11 @@ switch math
         minlen = 5;
         collen = 100;
     case 0
-        minlen = 10;
+        if(is96)
+            minlen = 20;
+        else
+            minlen = 10;
+        end
         collen = 750;
 end
 
@@ -250,8 +267,8 @@ while(col < endCol)
                 end
 
                 if(strcmp(string(label1),'E') || strcmp(string(label1),'\Sigma') || strcmp(string(label1),'S') || strcmp(string(label1),'\int'))
-                    % here this feedback loop looks for the different
-                    % parts of discontinuous symbols
+                    % here this feedback loop looks for the bounds of
+                    % mathematical operators
                     lettop = min(bound(:,2));
 
                     letBounds = [min(bound(:,1)) max(bound(:,1))];
@@ -622,9 +639,9 @@ while(col < endCol)
                                     let2 = imresize(let2,[28 28]);
                                     [dc, num] = predict_letter(let1, let2);
                                     if(contains(string(label1),'sum'))
-                                        label1 = append(label1,strjoin(['_{=',string(num),'}'],''),'');
+                                        label1 = append(string(label1),strjoin(['_{=',string(num),'}'],''),'');
                                     else
-                                        label1 = append(label1,strjoin(['_{',string(num),'}'],''),'');
+                                        label1 = append(string(label1),strjoin(['_{',string(num),'}'],''),'');
                                     end
                                     break;
                                 end
@@ -690,7 +707,7 @@ if outputLatex>2
     fprintf(outputLatex, '\n');
     fprintf(outputLatex, '\\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}\n');
     fprintf(outputLatex, '\n');
-    fprintf(outputLatex, '\\title{Winter 2022 Final Project}\n');
+    fprintf(outputLatex, ['\\title{',lecture,'}\n']);
     fprintf(outputLatex, '\\author{Group 6}\n\n');
     fprintf(outputLatex, '\\begin{document}\n');
     fprintf(outputLatex, '\\maketitle\n');

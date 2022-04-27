@@ -47,7 +47,6 @@ We implemented a convolutional neural network following the LeNet structure. Our
 
 The five classification methods listed above were for our own testing purposes in choosing the best method for this specific application. Overall, the Support Vector Machine led in accuracy, but we decided to use the LeNet Neural Network classification technique for its high accuracy, low memory usage, speed efficiency, and straightforward interface with MATLAB.
 
-
 Our character classification subsystem implementation in MATLAB can be split into two primary processes: image processing and executing the model. Each process is its own script.
 
 1. [Data Conditioning](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/data_conditioning.m)

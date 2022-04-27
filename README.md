@@ -31,7 +31,7 @@ Our main objective of this process is distinguishing the handwriting from the bl
 
 We had to intertwine the implementation of these subsystems. Read more about each below, and access the .m file listed below to read through our code for these subsections. Note: the image "text" is assumed to be the output from the Image Filtering and Processing subsystem. We are simply extracting the required code for these two subsections for parsability when examining this project, so this .m file is not meant to be run on its own. 
 
-1. [CharacterIsolationAndClassification.m]()
+1. [CharacterIsolationAndClassification.m](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/CharacterIsolationAndClassification.m)
 
 #### Character Isolation
 This section is highly dependent on the handwriting style of any individual image. We needed to take into account that the spacing between characters will vary heavily, and that nobody can write on a perfectly straight line. This means that our system must be shift invariant to correct the character separation issue, and rotation invariant to correct the imperfect lines of writing. The character isolation process was definitely the most algorithmically-intensive process to design in our project due to the difficulty of making this subsystem shift and rotation invariant. 
@@ -54,7 +54,7 @@ Our *first version* of the character classification subsystem implementation in 
 1. [Data Conditioning](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/data_conditioning.m)
 2. [Model Training](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/train_test.m)
 
-See the linked [CharacterIsolationAndClassification.m]() file to see our final version of this subsystem in combination with the Character Isolation subsystem.
+See the linked [CharacterIsolationAndClassification.m](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/CharacterIsolationAndClassification.m) file to see our final version of this subsystem in combination with the Character Isolation subsystem.
 
 ### Latex Document Formatting
 We created a script in MATLAB that converts the outputted classified characters from the Character Classification subsection to a LaTeX file. Our function currently takes in the user-defined lecture title and date metadata, then combines that information with the lecture content in the body of the document. 

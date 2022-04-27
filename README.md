@@ -54,7 +54,14 @@ Our *first version* of the character classification subsystem implementation in 
 1. [Data Conditioning](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/data_conditioning.m)
 2. [Model Training](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/train_test.m)
 
-See the linked [CharacterIsolationAndClassification.m](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/CharacterIsolationAndClassification.m) file to see our final version of this subsystem in combination with the Character Isolation subsystem.
+We implemented our final version of the Character Classification subsystem as a Python function, called within the MATLAB file. First, the program calls [predict_letter.m](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/matlabHandwriting/predict_letter.m) to classify a given subimage. Then, [predict_letter.m](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/matlabHandwriting/predict_letter.m) uses a Python virtual environment to run the LeNet Convolutional Neural Network classifier in Python. The user must have: 
+
+1. [nnpredict_hasy.py](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/matlabHandwriting/nnpredict_hasy.py) or [nnpredict.py](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/matlabHandwriting/nnpredict.py) 
+2. [lenet.py](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/matlabHandwriting/lenet.py)
+
+We were only able to setup the virtual Python environment in Linux (not on Windows). To account for any interested parties without access to a Linux system, we record a video demonstration of the full-scale system running on our [team website](https://sites.google.com/umich.edu/eecs-351-handwriting-to-latex/home?authuser=0) in the Processes tab.
+
+See the linked [CharacterIsolationAndClassification.m](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/CharacterIsolationAndClassification.m) file to see our final version of this subsystem in combination with the Character Isolation subsystem. 
 
 ### Latex Document Formatting
 We created a script in MATLAB that converts the outputted classified characters from the Character Classification subsection to a LaTeX file. Our function currently takes in the user-defined lecture title and date metadata, then combines that information with the lecture content in the body of the document. 

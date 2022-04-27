@@ -67,7 +67,7 @@ See the linked [CharacterIsolationAndClassification.m](https://github.com/Emilia
 ### Latex Document Formatting
 We created a script in MATLAB that converts the outputted classified characters from the Character Classification subsection to a LaTeX file. Our function currently takes in the user-defined lecture title and date metadata, then combines that information with the lecture content in the body of the document. 
 
-1. [Latex Output V2 with buggy newline capabilities](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/projectPDF.m)
+1. [LaTeX_Subsystem.m](https://github.com/EmiliaPsacharopoulos/HandwritingToLatex/blob/main/LaTeX_Subsystem.m)
 
 
 ###  Project Code in its Entirety

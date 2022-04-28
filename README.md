@@ -78,6 +78,27 @@ The entire system follows the flowchart inserted above. It can be run by downloa
 * You must change the directory to your personal location of the folder
 
 
+## Data
+
+### Our Own Character Handwriting Samples
+[Dataset Link](https://drive.google.com/drive/folders/1qJdVS5bR81oHK7z92HAfMuExT0la9WWD)
+
+We made a small database of our own handwriting of the alphabet and some common mathematical symbols. The following characters have more than 20+ samples: N, n, x, Summation, infinity, equals sign, plus sign. We chose those characters from our experiences of knowing how common they are in an EECS 351 lecture. The idea here was to get a small scale idea of using simple classifiers in MATLAB at the beginning of our project. Also, we wanted to obtain samples that use a variety of different backgrounds, and writing tools. 
+
+### EMNIST Database Training Data
+[Dataset Link](https://paperswithcode.com/dataset/emnist)
+
+The EMNIST dataset is a publicly available dataset which contains samples of handwritten digits. There are 60,000 training samples and 10,000 testing samples. It contains handwriting samples from American high school students, as well as American Census Bureau employees. The samples are normalized to fit into a 28x28 pixel box and are anti-aliased. 
+
+We implemented K Nearest Neighbors, Multinomial Naïve Bayes, Support Vector Machine, LeNet Neural Network, and Decision Tree Classifiers on this dataset. 
+
+### HASYv2 Database Training Data
+[Dataset Link](https://arxiv.org/pdf/1701.08380.pdf)
+
+The HASYv2 dataset is a publicly available dataset which contains samples of handwritten letters, digits, and mathematical symbols. Each character is a black and white, 32x32 image. There are a total of ~168,000 images in the dataset, each correctly labelled with one of the 369 potential classes. 
+
+This dataset was used to train our second neural network to recognize mathematical symbols. Rather than using all of the classes, we extracted the numbers, letters, and a small selection of other characters (∏, ∑, ∫, <, >, -, +, /, ×, ≈, [, ], ∞, 𝛕, →). 
+
 ## Authors
 * Emilia Psacharopoulos
 * Enakshi Deb
